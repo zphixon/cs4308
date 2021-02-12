@@ -1,5 +1,7 @@
 package com.cs4308.basic;
 
+import static com.cs4308.basic.TokenType.*;
+
 public class Token {
     final TokenType type;
     final String lexeme;
@@ -16,8 +18,7 @@ public class Token {
     public String toString() {
         return "Token { "
             + type
-            + " '" + lexeme + "'"
-            + (literal == null ? "" : " " + literal)
+            + (type != NEWLINE  ? " '" + lexeme + "'" : "")
             + " }";
     }
 }

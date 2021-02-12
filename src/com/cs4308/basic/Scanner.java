@@ -79,6 +79,7 @@ public class Scanner {
 
             // Increment line on newline
             case '\n':
+                addToken(NEWLINE);
                 line++;
                 break;
 
