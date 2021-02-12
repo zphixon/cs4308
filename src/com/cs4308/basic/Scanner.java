@@ -32,6 +32,7 @@ public class Scanner {
         keywords.put("let", LET);
         keywords.put("print", PRINT);
         keywords.put("return", RETURN);
+        keywords.put("input", INPUT);
     }
 
     // Source of the program

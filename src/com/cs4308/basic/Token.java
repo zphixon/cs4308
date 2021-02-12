@@ -3,7 +3,7 @@ package com.cs4308.basic;
 public class Token {
     final TokenType type;
     final String lexeme;
-    final Object literal;
+    final Object literal; // Extra field for tokens like strings that could be broken across multiple lines
     final int line;
 
     public Token(TokenType type, String lexeme, Object literal, int line) {

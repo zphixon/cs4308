@@ -16,7 +16,7 @@ public enum TokenType {
     // reserved words
     IF, ELSE, ELSEIF, THEN, FOR, WHILE, DO, END,
     NULL, TRUE, FALSE, AND, OR,
-    FUN, LET, PRINT, RETURN,
+    FUN, LET, PRINT, RETURN, INPUT,
 
     EOF
 }
