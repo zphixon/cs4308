@@ -1,4 +1,4 @@
-for i = 1 to 100 do
+for i = 1, 100 do
     if i % 15 == 0 then
         print "fizzbuzz"
     elseif i % 3 == 0 then

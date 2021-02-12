@@ -1,6 +1,6 @@
-function jos(n, k)
+fun jos(n, k)
     let m = 0
-    for i = m + 1 to n do
+    for i = m + 1, n do
         m = (m + k) % i
     end
     return m

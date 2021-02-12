@@ -1,4 +1,4 @@
-function leapYear(year)
+fun leapYear(year)
     if year % 4 != 0 then
         return false
     elseif year % 100 != 0 then
