@@ -3,12 +3,11 @@ package com.cs4308.basic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.cs4308.basic.TokenType.*;
 
 public class Scanner {
-    private static final Map<String, TokenType> keywords;
+    private static final HashMap<String, TokenType> keywords;
 
     // Map of reserved keywords
     static {
