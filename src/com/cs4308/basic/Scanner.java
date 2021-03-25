@@ -26,12 +26,18 @@ public class Scanner {
         keywords.put("GOSUB", GOSUB);
         keywords.put("RETURN", RETURN);
         keywords.put("MOD", MOD);
+        keywords.put("FOR", FOR);
+        keywords.put("NEXT", NEXT);
 
         keywords.put("REM", REM);
         keywords.put("HOME", HOME);
         keywords.put("TEXT", TEXT);
         keywords.put("PR", PR);
         keywords.put("GET", GET);
+
+        keywords.put("INT", INT);
+        keywords.put("CHR$", CHR$);
+        keywords.put("STR$", STR$);
     }
 
     // Source of the program
@@ -96,14 +102,14 @@ public class Scanner {
             case '/':
                 addToken(DIVIDE);
                 break;
-            case '%':
-                addToken(MOD);
-                break;
             case ';':
                 addToken(SEMICOLON);
                 break;
             case ':':
                 addToken(COLON);
+                break;
+            case '#':
+                addToken(HASH);
                 break;
 
             // If the next character matches then advance
@@ -197,7 +203,7 @@ public class Scanner {
     }
 
     private void identifier() {
-        while (isAlphaNumeric(peek())) {
+        while (peek() == '$' || isAlphaNumeric(peek())) {
             advance();
         }
 
