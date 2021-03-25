@@ -5,29 +5,30 @@ import java.util.List;
 public class Ast {
     public List<Statement> statements;
 
+    public Ast(List<Statement> statements) {
+        this.statements = statements;
+    }
+
     public static class Expression {
-        public Token value;
-        public NotAFunction notAFunction;
-        public Binary binary;
-        public Paren paren;
-
-        public Expression(Token value) {
-            this.value = value;
+        public static class Value extends Expression {
+            public Token value;
         }
 
-        public Expression(NotAFunction notAFunction) {
-            this.notAFunction = notAFunction;
+        public static class NotAFunction extends Expression {
+            public Token name;
+            public Token leftParen;
+            public Expression expression;
+            public Token rightParen;
+
+            public NotAFunction(Token name, Token leftParen, Expression expression, Token rightParen) {
+                this.name = name;
+                this.leftParen = leftParen;
+                this.expression = expression;
+                this.rightParen = rightParen;
+            }
         }
 
-        public Expression(Binary binary) {
-            this.binary = binary;
-        }
-
-        public Expression(Paren paren) {
-            this.paren = paren;
-        }
-
-        public static class Binary {
+        public static class Binary extends Expression {
             public Expression lhs;
             public Token op;
             public Expression rhs;
@@ -39,7 +40,7 @@ public class Ast {
             }
         }
 
-        public static class Paren {
+        public static class Paren extends Expression {
             public Token leftParen;
             public Expression expression;
             public Token rightParen;
@@ -241,20 +242,6 @@ public class Ast {
             this.comma = comma;
             this.semicolon = semicolon;
             this.expression = expression;
-        }
-    }
-
-    public static class NotAFunction {
-        public Token name;
-        public Token leftParen;
-        public Expression expression;
-        public Token rightParen;
-
-        public NotAFunction(Token name, Token leftParen, Expression expression, Token rightParen) {
-            this.name = name;
-            this.leftParen = leftParen;
-            this.expression = expression;
-            this.rightParen = rightParen;
         }
     }
 }
