@@ -13,26 +13,25 @@ public class Scanner {
     static {
         keywords = new HashMap<>();
 
-        keywords.put("if", IF);
-        keywords.put("else", ELSE);
-        keywords.put("elseif", ELSEIF);
-        keywords.put("then", THEN);
-        keywords.put("for", FOR);
-        keywords.put("while", WHILE);
-        keywords.put("do", DO);
-        keywords.put("end", END);
+        keywords.put("NOT", NOT);
+        keywords.put("AND", AND);
+        keywords.put("OR", OR);
+        keywords.put("IF", IF);
+        keywords.put("THEN", THEN);
 
-        keywords.put("null", NULL);
-        keywords.put("true", TRUE);
-        keywords.put("false", FALSE);
-        keywords.put("and", AND);
-        keywords.put("or", OR);
+        keywords.put("LET", LET);
+        keywords.put("GOTO", GOTO);
+        keywords.put("PRINT", PRINT);
+        keywords.put("END", END);
+        keywords.put("GOSUB", GOSUB);
+        keywords.put("RETURN", RETURN);
+        keywords.put("MOD", MOD);
 
-        keywords.put("fun", FUN);
-        keywords.put("let", LET);
-        keywords.put("print", PRINT);
-        keywords.put("return", RETURN);
-        keywords.put("input", INPUT);
+        keywords.put("REM", REM);
+        keywords.put("HOME", HOME);
+        keywords.put("TEXT", TEXT);
+        keywords.put("PR", PR);
+        keywords.put("GET", GET);
     }
 
     // Source of the program
@@ -64,13 +63,6 @@ public class Scanner {
         char c = advance();
 
         switch (c) {
-            // Comments, skip until newline
-            case '#':
-                while (peek() != '\n' && !isAtEnd()) {
-                    advance();
-                }
-                break;
-
             // Skip whitespace
             case ' ':
             case '\r':
@@ -107,16 +99,27 @@ public class Scanner {
             case '%':
                 addToken(MOD);
                 break;
+            case ';':
+                addToken(SEMICOLON);
+                break;
+            case ':':
+                addToken(COLON);
+                break;
 
             // If the next character matches then advance
-            case '!':
-                addToken(match('=') ? NOT_EQUAL : NOT);
-                break;
             case '=':
-                addToken(match('=') ? EQUAL : ASSIGN);
+                addToken(EQUAL);
                 break;
             case '<':
-                addToken(match('=') ? LESS_EQUAL : LESS);
+                if (peek() == '>') {
+                    advance();
+                    addToken(NOT_EQUAL);
+                } else if (peek() == '=') {
+                    advance();
+                    addToken(LESS_EQUAL);
+                } else {
+                    addToken(LESS);
+                }
                 break;
             case '>':
                 addToken(match('=') ? GREATER_EQUAL : GREATER);
@@ -203,6 +206,12 @@ public class Scanner {
         TokenType type = keywords.get(text);
         if (type == null) {
             type = IDENTIFIER;
+        }
+
+        if (type == REM) {
+            while (peek() != '\n' && !isAtEnd()) {
+                advance();
+            }
         }
 
         addToken(type);

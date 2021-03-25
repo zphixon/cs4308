@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            runFile("example-programs/leapyear.bas");
+            runFile("example-programs/example1.bas");
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
