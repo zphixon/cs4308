@@ -54,8 +54,7 @@ public class Main {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
 
         // the String constructor silently creates garbage if it finds an encoding error or isn't able to
-        // translate it into the JVM's charset, causing characters like � to appear. ideally everything
-        // would be in UTF-8 nowadays but unfortunately we live in the worst timeline
+        // translate it into the JVM's charset, causing characters like � to appear
         run(new String(bytes, Charset.defaultCharset()));
     }
 
@@ -64,13 +63,16 @@ public class Main {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
+        // Print the tokens we found
         for (Token token : tokens) {
             System.out.println(token);
         }
 
+        // Parse the tokens into an abstract syntax tree (AST)
         Parser parser = new Parser(tokens);
         Ast ast = parser.parse();
 
+        // Print the AST as JSON
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
         System.out.println(gson.toJson(ast));
 
