@@ -65,6 +65,7 @@ public class Scanner {
         return tokens;
     }
 
+    // Scan a token, adding it to this.tokens
     private void scanToken() {
         // Grab the first character of the next token
         char c = advance();
@@ -149,6 +150,7 @@ public class Scanner {
         }
     }
 
+    // Tokenize a string, potentially multiline
     private void string() {
         // No string escapes, just go until you find the closing "
         while (peek() != '"' && !isAtEnd()) {
@@ -170,6 +172,7 @@ public class Scanner {
         addToken(STRING, value);
     }
 
+    // Tokenize an integer, TODO remove floating-point numbers?
     private void integer() {
         while (isDigit(peek())) {
             advance();
@@ -186,23 +189,23 @@ public class Scanner {
         addToken(INTEGER, Integer.parseInt(source.substring(start, current)));
     }
 
+    // Tokenize a floating-point number
     private void floatingPoint() {
         while (isDigit(peek())) {
             advance();
         }
 
-        if (peek() == '.' && isDigit(peekNext())) {
-            // Skip over the .
-            advance();
+        // Skip over the .
+        advance();
 
-            while (isDigit(peek())) {
-                advance();
-            }
+        while (isDigit(peek())) {
+            advance();
         }
 
         addToken(FLOAT, Double.parseDouble(source.substring(start, current)));
     }
 
+    // Tokenize an identifier that potentially has the symbol $ in it
     private void identifier() {
         while (peek() == '$' || isAlphaNumeric(peek())) {
             advance();
@@ -215,6 +218,7 @@ public class Scanner {
             type = IDENTIFIER;
         }
 
+        // REM means remark - this is a comment. Eat the rest of the line.
         if (type == REM) {
             while (peek() != '\n' && !isAtEnd()) {
                 advance();
@@ -247,6 +251,7 @@ public class Scanner {
         return source.charAt(current);
     }
 
+    // Look at the character under the next position of the "cursor"
     private char peekNext() {
         if (current + 1 >= source.length()) {
             return '\0';
@@ -255,11 +260,13 @@ public class Scanner {
         return source.charAt(current + 1);
     }
 
+    // Go forward by one character
     private char advance() {
         current++;
         return source.charAt(current - 1);
     }
 
+    // Add a token to the list of tokens
     private void addToken(TokenType type) {
         addToken(type, null);
     }
@@ -270,21 +277,25 @@ public class Scanner {
         tokens.add(new Token(type, text, literal, line));
     }
 
+    // Check if the scanner is at the end of the source
     private boolean isAtEnd() {
         return current >= source.length();
     }
 
-    private boolean isDigit(char c) {
+    // Is the character a digit
+    private static boolean isDigit(char c) {
         return c >= '0' && c <= '9';
     }
 
-    private boolean isAlpha(char c) {
+    // Is the character alphabetic
+    private static boolean isAlpha(char c) {
         return (c >= 'a' && c <= 'z') ||
                 (c >= 'A' && c <= 'Z') ||
                 c == '_';
     }
 
-    private boolean isAlphaNumeric(char c) {
+    // Is the character alphanumeric
+    private static boolean isAlphaNumeric(char c) {
         return isAlpha(c) || isDigit(c);
     }
 }
