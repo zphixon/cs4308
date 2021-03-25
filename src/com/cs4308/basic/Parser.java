@@ -20,6 +20,10 @@ public class Parser {
     public Ast parse() {
         while (peek().type != EOF) {
             parseStatement();
+
+            while (peek().type == NEWLINE) {
+                next();
+            }
         }
 
         if (Main.hadError) {
@@ -30,6 +34,50 @@ public class Parser {
     }
 
     void parseStatement() {
+        try {
+            Token lineNumber = consume(INTEGER);
+            Ast.Command command = parseCommand();
+
+            ArrayList<Ast.Command> extraCommands = new ArrayList<>();
+            while (peek().type == COLON) {
+                consume(COLON);
+                extraCommands.add(parseCommand());
+            }
+
+            Token newline = consume(NEWLINE);
+            statements.add(new Ast.Statement(lineNumber, command, extraCommands, newline));
+        } catch (ParseException e) {
+            Main.error(peek().line, e.getMessage());
+            synchronize();
+        }
+    }
+
+    Ast.Command parseCommand() throws ParseException {
+        Token name = next();
+        Ast.Command command = null;
+
+        switch (name.type) {
+            // commands with no "arguments"
+            case REM:
+                command = new Ast.Command.Rem(name);
+                break;
+            case TEXT:
+                command = new Ast.Command.Text(name);
+                break;
+            case HOME:
+                command = new Ast.Command.Home(name);
+                break;
+            case RETURN:
+                command = new Ast.Command.Return(name);
+                break;
+            case END:
+                command = new Ast.Command.End(name);
+                break;
+            default:
+                throw new ParseException("Expected command, got '" + name.lexeme + "'");
+        }
+
+        return command;
     }
 
     // Get the parser to a possibly good state, allowing us to detect multiple syntax errors in one program source
@@ -40,8 +88,19 @@ public class Parser {
             ;
     }
 
+    Token consume(TokenType type) throws ParseException {
+        Token next = next();
+        if (next.type != type) {
+            throw new ParseException("Expected " + type + ", got '" + next + "'");
+        }
+        return next;
+    }
+
     // Get the current token, advance the cursor
     Token next() {
+        if (tokenIndex + 1 >= tokens.size())
+            return tokens.get(tokens.size() - 1);
+
         return tokens.get(tokenIndex++);
     }
 
@@ -52,5 +111,11 @@ public class Parser {
 
     Token peek(int forward) {
         return tokens.get(tokenIndex + forward);
+    }
+
+    public static class ParseException extends Exception {
+        public ParseException(String message) {
+            super(message);
+        }
     }
 }
