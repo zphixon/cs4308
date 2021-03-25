@@ -35,6 +35,7 @@ public class Scanner {
         keywords.put("TEXT", TEXT);
         keywords.put("PR", PR);
         keywords.put("GET", GET);
+        keywords.put("INPUT", INPUT);
 
         keywords.put("INT", INT);
         keywords.put("CHR$", CHR$);
@@ -61,6 +62,7 @@ public class Scanner {
             scanToken();
         }
 
+        tokens.add(new Token(NEWLINE, "\n", null, line));
         tokens.add(new Token(EOF, "", null, line));
         return tokens;
     }

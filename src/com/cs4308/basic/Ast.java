@@ -12,6 +12,10 @@ public class Ast {
     public static class Expression {
         public static class Value extends Expression {
             public Token value;
+
+            public Value(Token value) {
+                this.value = value;
+            }
         }
 
         public static class NotAFunction extends Expression {
@@ -122,12 +126,12 @@ public class Ast {
         }
 
         public static class Print extends Command {
-            public Token string;
+            public Expression what;
             public List<PrintArgument> extra;
 
-            public Print(Token name, Token string, List<PrintArgument> extra) {
+            public Print(Token name, Expression what, List<PrintArgument> extra) {
                 super(name);
-                this.string = string;
+                this.what = what;
                 this.extra = extra;
             }
         }

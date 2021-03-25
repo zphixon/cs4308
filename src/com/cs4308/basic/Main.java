@@ -27,27 +27,27 @@ public class Main {
             e.printStackTrace();
         }
 
-        Ast ast = new Ast(Arrays.asList(
-                new Ast.Statement(
-                        new Token(TokenType.INTEGER, "10", null, 1),
-                        new Ast.Command.Print(
-                                new Token(TokenType.PRINT, "PRINT", null, 1),
-                                new Token(TokenType.STRING, "\"Hello!\"", null, 1),
-                                new ArrayList<>()
-                        ),
-                        new ArrayList<>(),
-                        new Token(TokenType.NEWLINE, "\n", null, 1)
-                ),
-                new Ast.Statement(
-                        new Token(TokenType.INTEGER, "20", null, 2),
-                        new Ast.Command.End(new Token(TokenType.END, "PRINT", null, 2)),
-                        new ArrayList<>(),
-                        new Token(TokenType.NEWLINE, "\n", null, 2)
-                )
-        ));
+        //Ast ast = new Ast(Arrays.asList(
+        //        new Ast.Statement(
+        //                new Token(TokenType.INTEGER, "10", null, 1),
+        //                new Ast.Command.Print(
+        //                        new Token(TokenType.PRINT, "PRINT", null, 1),
+        //                        new Ast.Expression.Value(new Token(TokenType.STRING, "\"Hello!\"", null, 1)),
+        //                        new ArrayList<>()
+        //                ),
+        //                new ArrayList<>(),
+        //                new Token(TokenType.NEWLINE, "\n", null, 1)
+        //        ),
+        //        new Ast.Statement(
+        //                new Token(TokenType.INTEGER, "20", null, 2),
+        //                new Ast.Command.End(new Token(TokenType.END, "PRINT", null, 2)),
+        //                new ArrayList<>(),
+        //                new Token(TokenType.NEWLINE, "\n", null, 2)
+        //        )
+        //));
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        System.out.println(gson.toJson(ast));
+        //Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+        //System.out.println(gson.toJson(ast));
     }
 
     public static void runFile(String path) throws IOException {

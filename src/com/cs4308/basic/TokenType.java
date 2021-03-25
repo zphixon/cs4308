@@ -23,7 +23,7 @@ public enum TokenType {
     MOD,
 
     // weird ones
-    REM, HOME, TEXT, PR, GET,
+    REM, HOME, TEXT, PR, GET, INPUT,
 
     // even weirder
     INT, CHR$, STR$,

@@ -1,0 +1,8 @@
+10 INPUT "enter a year: "; YEAR
+20 IF (YEAR MOD 4) <> 0 THEN GOTO 100 : REM yeet
+30 IF (YEAR MOD 100) <> 0 THEN GOTO 50
+40 IF (YEAR MOD 400) <> 0 THEN GOTO 100
+50 PRINT YEAR;" is not a leap year"
+60 END
+100 PRINT YEAR; " is a leap year"
+110 GOTO 60

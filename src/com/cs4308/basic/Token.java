@@ -17,8 +17,8 @@ public class Token {
 
     public String toString() {
         return "Token { "
-            + type
-            + (type != NEWLINE  ? " '" + lexeme.replaceAll("\r", "") + "'" : "")
-            + " }";
+                + type
+                + (type != NEWLINE ? " '" + lexeme.replaceAll("\r", "") + "'" : "")
+                + " }";
     }
 }

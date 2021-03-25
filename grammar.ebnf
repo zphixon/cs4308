@@ -21,13 +21,15 @@ command = 'REM'
 
 if_declare = IDENTIFIER '=' expression
 
-expression = value
-           | not_a_function
-           | binary
-           | paren
+expression = logic
+logic = primary {('AND' | 'OR') primary}
+primary = value
+        | not_a_function
+        | paren
+        | binary
 
 value = IDENTIFIER | INTEGER | STRING
 not_a_function = ('CHR$' | 'STR$' | 'INT' | 'NOT') '(' expression ')'
 binary = expression op expression
-op = '+' | '-' | '/' | '*' | 'MOD' | 'OR' | 'AND'
+op = '+' | '-' | '/' | '*' | 'MOD'
 paren = '(' expression ')'
