@@ -10,8 +10,13 @@ public class Main {
     static boolean hadError = false;
 
     public static void main(String[] args) {
+        if (args.length < 1) {
+            System.out.println("need argument");
+        }
+
+        System.out.println("Run file " + args[0]);
         try {
-            runFile("example-programs/example1.bas");
+            runFile(args[0]);
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
