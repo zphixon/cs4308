@@ -19,7 +19,7 @@ public enum TokenType {
     NOT, AND, OR, IF, THEN,
     LET, GOTO, PRINT, END,
     GOSUB, RETURN,
-    FOR, NEXT,
+    FOR, TO, NEXT,
     MOD,
 
     // weird ones

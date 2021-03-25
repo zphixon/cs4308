@@ -1,0 +1,31 @@
+
+program = {statements {NEWLINE}}
+
+statement = 'INTEGER' command {':' command} 'NEWLINE'
+
+command = 'REM'
+        | 'LET' IDENTIFIER = expression
+        | 'INPUT' STRING ';' IDENTIFIER
+        | 'IF' expression 'THEN' (command | if_declare)
+        | 'PRINT' STRING {(',' | ';') expression}
+        | 'TEXT'
+        | 'PR' '#' INTEGER
+        | 'HOME'
+        | 'GOSUB' INTEGER
+        | 'RETURN'
+        | 'GET' IDENTIFIER
+        | 'GOTO' INTEGER
+        | 'FOR' IDENTIFIER '=' expression 'TO' expression
+        | 'NEXT' IDENTIFIER
+        | 'END'
+
+expression = value
+           | not_a_function '(' expression ')'
+           | expression op expression
+           | '(' expression ')'
+
+if_declare = IDENTIFIER '=' expression
+
+value = IDENTIFIER | INTEGER | STRING
+op = '+' | '-' | '/' | '*' | 'MOD' | 'OR' | 'AND'
+not_a_function = 'CHR$' | 'STR$' | 'INT' | 'NOT'

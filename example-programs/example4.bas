@@ -11,7 +11,7 @@
 50 PRINT "Decimal","Hex"
 60 PRINT "-------","---"
 
-70 FOR I = S to (20 + S)
+70 FOR I = S TO (20 + S)
 
 80 LET A = I
 

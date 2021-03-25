@@ -10,7 +10,7 @@
 
 50 INPUT "Enter an integer greater or equal than zero: ";A
 
-60 IF (A < 0 OR A<>INT(A)) GOTO 50
+60 IF (A < 0 OR A<>INT(A)) THEN GOTO 50
 
 70 LET B = A - INT (A/2) * 2
 
@@ -22,7 +22,7 @@
 
 110 LET A = (A - B) / 2
 
-120 IF (A > 0) GOTO 70
+120 IF (A > 0) THEN GOTO 70
 
 130 PRINT "As binary: ";X
 

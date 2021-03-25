@@ -27,6 +27,7 @@ public class Scanner {
         keywords.put("RETURN", RETURN);
         keywords.put("MOD", MOD);
         keywords.put("FOR", FOR);
+        keywords.put("TO", TO);
         keywords.put("NEXT", NEXT);
 
         keywords.put("REM", REM);

@@ -10,7 +10,7 @@
 
 60 LET N = N + 2
 
-70 IF N <= 20 GOTO 40
+70 IF N <= 20 THEN GOTO 40
 
 80 PRINT : REM print empty line
 
