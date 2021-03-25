@@ -1,5 +1,5 @@
 
-program = {statements {NEWLINE}}
+program = {statement {NEWLINE}}
 
 statement = 'INTEGER' command {':' command} 'NEWLINE'
 
@@ -19,13 +19,15 @@ command = 'REM'
         | 'NEXT' IDENTIFIER
         | 'END'
 
-expression = value
-           | not_a_function '(' expression ')'
-           | expression op expression
-           | '(' expression ')'
-
 if_declare = IDENTIFIER '=' expression
 
+expression = value
+           | not_a_function
+           | binary
+           | paren
+
 value = IDENTIFIER | INTEGER | STRING
+not_a_function = ('CHR$' | 'STR$' | 'INT' | 'NOT') '(' expression ')'
+binary = expression op expression
 op = '+' | '-' | '/' | '*' | 'MOD' | 'OR' | 'AND'
-not_a_function = 'CHR$' | 'STR$' | 'INT' | 'NOT'
+paren = '(' expression ')'

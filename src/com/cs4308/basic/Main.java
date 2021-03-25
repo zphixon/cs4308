@@ -1,5 +1,8 @@
 package com.cs4308.basic;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -21,6 +24,7 @@ public class Main {
             System.out.println(e);
             e.printStackTrace();
         }
+
     }
 
     public static void runFile(String path) throws IOException {
@@ -42,6 +46,12 @@ public class Main {
         for (Token token : tokens) {
             System.out.println(token);
         }
+
+        Parser parser = new Parser(tokens);
+        Ast ast = parser.parse();
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+        System.out.println(gson.toJson(ast));
 
         if (hadError) {
             System.exit(-1);
