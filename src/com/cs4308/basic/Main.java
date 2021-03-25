@@ -6,10 +6,10 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class Main {
     static boolean hadError = false;
@@ -19,35 +19,34 @@ public class Main {
             System.out.println("need argument");
         }
 
-        System.out.println("Run file " + args[0]);
-        try {
-            runFile(args[0]);
-        } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
+        if (args[0].equals("-a") && args.length == 2) {
+            System.out.println("Run files in " + args[1]);
+            try {
+                try (Stream<Path> paths = Files.walk(Paths.get(args[1]))) {
+                    paths.filter(Files::isRegularFile)
+                            .filter(file -> !file.toString().endsWith(".bas1"))
+                            .forEach(file -> {
+                                System.out.println("Run file " + file);
+                                try {
+                                    runFile(file.toString());
+                                } catch (Exception e) {
+                                    System.out.println(e);
+                                    e.printStackTrace();
+                                }
+                            });
+                }
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        } else {
+            System.out.println("Run file " + args[0]);
+            try {
+                runFile(args[0]);
+            } catch (Exception e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
         }
-
-        //Ast ast = new Ast(Arrays.asList(
-        //        new Ast.Statement(
-        //                new Token(TokenType.INTEGER, "10", null, 1),
-        //                new Ast.Command.Print(
-        //                        new Token(TokenType.PRINT, "PRINT", null, 1),
-        //                        new Ast.Expression.Value(new Token(TokenType.STRING, "\"Hello!\"", null, 1)),
-        //                        new ArrayList<>()
-        //                ),
-        //                new ArrayList<>(),
-        //                new Token(TokenType.NEWLINE, "\n", null, 1)
-        //        ),
-        //        new Ast.Statement(
-        //                new Token(TokenType.INTEGER, "20", null, 2),
-        //                new Ast.Command.End(new Token(TokenType.END, "PRINT", null, 2)),
-        //                new ArrayList<>(),
-        //                new Token(TokenType.NEWLINE, "\n", null, 2)
-        //        )
-        //));
-
-        //Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        //System.out.println(gson.toJson(ast));
     }
 
     public static void runFile(String path) throws IOException {
@@ -65,7 +64,6 @@ public class Main {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-        // Print out tokens for now, later we will feed them into the parser
         for (Token token : tokens) {
             System.out.println(token);
         }
