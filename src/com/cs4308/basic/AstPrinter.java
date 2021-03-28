@@ -41,6 +41,10 @@ public class AstPrinter {
             }
         } else if (command instanceof Ast.Command.Print) {
             buildExpression(((Ast.Command.Print) command).what, str);
+            for (Ast.PrintArgument arg : ((Ast.Command.Print) command).extra) {
+                str.append(arg.comma != null ? ", " : "; ");
+                buildExpression(arg.expression, str);
+            }
         } else if (command instanceof Ast.Command.Text) {
         } else if (command instanceof Ast.Command.Pr) {
             str.append("#");
