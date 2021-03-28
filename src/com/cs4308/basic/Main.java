@@ -75,6 +75,7 @@ public class Main {
         // Print the AST as JSON
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
         System.out.println(gson.toJson(ast));
+        System.out.println(AstPrinter.print(ast));
 
         if (hadError) {
             System.exit(-1);
