@@ -64,17 +64,15 @@ public class Main {
         List<Token> tokens = scanner.scanTokens();
 
         // Print the tokens we found
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
+        //for (Token token : tokens) {
+        //    System.out.println(token);
+        //}
 
         // Parse the tokens into an abstract syntax tree (AST)
         Parser parser = new Parser(tokens);
         Ast ast = parser.parse();
 
-        // Print the AST as JSON
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-        System.out.println(gson.toJson(ast));
+        // Print the AST
         System.out.println(AstPrinter.print(ast));
 
         if (hadError) {
