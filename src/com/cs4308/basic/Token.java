@@ -13,6 +13,18 @@ public class Token {
         this.line = line;
     }
 
+    public Value literalToValue() {
+        if (this.literal instanceof String) {
+            return new Value((String) this.literal);
+        } else if (this.literal instanceof Double) {
+            return new Value((Double) this.literal);
+        } else if (this.literal instanceof Integer) {
+            return new Value((Integer) this.literal);
+        } else {
+            return null;
+        }
+    }
+
     public String toString() {
         return "Token { "
                 + type

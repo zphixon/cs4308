@@ -1,1 +1,2 @@
 10 LET x = 3
+20 PRINT x + 4

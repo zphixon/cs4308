@@ -70,10 +70,18 @@ public class Main {
         Ast ast = parser.parse();
 
         // Print the AST
-        System.out.println(AstPrinter.print(ast));
+        //System.out.println(AstPrinter.print(ast));
 
         if (hadError) {
             System.exit(-1);
+        }
+
+        Interpreter interpreter = new Interpreter();
+
+        try {
+            interpreter.interpret(ast);
+        } catch (Interpreter.InterpreterException e) {
+            System.err.println(e.getMessage());
         }
     }
 
