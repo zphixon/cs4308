@@ -17,7 +17,12 @@ public class Interpreter {
             Ast.Command command = statement.command;
             if (command instanceof Ast.Command.Print) {
                 String print = this.interpretExpression(((Ast.Command.Print) command).what).toString();
-                System.out.println(print);
+                System.out.print(print);
+                for (Ast.PrintArgument extra : ((Ast.Command.Print) command).extra) {
+                    String printExtra = this.interpretExpression(extra.expression).toString();
+                    System.out.print("\t" + printExtra);
+                }
+                System.out.println();
             } else if (command instanceof Ast.Command.Let) {
                 Ast.Command.Let let = (Ast.Command.Let) command;
                 Value value = this.interpretExpression(let.expression);
@@ -81,10 +86,8 @@ public class Interpreter {
             Value value = this.interpretExpression(notAFunction.expression);
             switch (notAFunction.name.type) {
                 case INT:
-                    if (value.type != Value.ValueType.STRING) {
-                        throw new InterpreterException(notAFunction.name, "INT got a non-string as an argument");
-                    }
-                    return new Value(Double.parseDouble(value.toString()));
+                    int intValue = (int) Double.parseDouble(value.toString());
+                    return new Value(intValue);
                 case CHR$:
                     if (value.type != Value.ValueType.NUMBER) {
                         throw new InterpreterException(notAFunction.name, "CHR$ got a non-number as an argument");

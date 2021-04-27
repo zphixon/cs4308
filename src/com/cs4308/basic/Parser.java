@@ -39,6 +39,9 @@ public class Parser {
     // Parse a statement
     void parseStatement() {
         try {
+            while (peek().type == NEWLINE) {
+                consume(NEWLINE);
+            }
             // Get line number and command
             Token lineNumber = consume(INTEGER);
             Ast.Command command = parseCommand();

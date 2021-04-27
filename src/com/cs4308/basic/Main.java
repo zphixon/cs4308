@@ -16,6 +16,7 @@ public class Main {
             System.out.println("need argument");
         }
 
+        // Run all files in the directory supplied, ignoring files with .bas1 extension
         if (args[0].equals("-a") && args.length == 2) {
             System.out.println("Run files in " + args[1]);
             try {
