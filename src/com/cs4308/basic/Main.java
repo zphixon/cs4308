@@ -20,10 +20,13 @@ public class Main {
         if (args[0].equals("-a") && args.length == 2) {
             System.out.println("Run files in " + args[1]);
             try {
+                // Loop through files in the directory
                 try (Stream<Path> paths = Files.walk(Paths.get(args[1]))) {
                     paths.filter(Files::isRegularFile)
+                            // Ignore files with .bas1 extension
                             .filter(file -> !file.toString().endsWith(".bas1"))
                             .forEach(file -> {
+                                // Run each file
                                 System.out.println("Run file " + file);
                                 try {
                                     runFile(file.toString());
@@ -77,9 +80,11 @@ public class Main {
             System.exit(-1);
         }
 
+        // Construct an interpreter
         Interpreter interpreter = new Interpreter();
 
         try {
+            // Run the ast with it
             interpreter.interpret(ast);
         } catch (Interpreter.InterpreterException e) {
             System.err.println(e.getMessage());
