@@ -22,7 +22,8 @@ public class Interpreter {
     public void interpret(Ast ast) throws InterpreterException {
         // Loop through each statement - this would be more complicated if
         // we implemented GOSUB/RETURN, since we would need to keep track of
-        // what line numbers we are executing.
+        // what line numbers we are executing, likely just using a simple for
+        // loop instead of a for-each loop.
         for (Ast.Statement statement : ast.statements) {
             // Get the command
             Ast.Command command = statement.command;
@@ -48,6 +49,11 @@ public class Interpreter {
                 Value value = this.interpretExpression(let.expression);
                 // Add it to the symbol table
                 this.variables.put(let.identifier.lexeme, value);
+            } else if (command instanceof Ast.Command.End) {
+                // Finish execution at END
+                break;
+            } else {
+                throw new InterpreterException(command.name, "unknown command " + command.name.lexeme);
             }
         }
     }
